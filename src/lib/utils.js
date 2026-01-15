@@ -1,12 +1,113 @@
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+/**
+ * Converts various input types to an array of class names
+ * Similar to clsx functionality
+ * @param  {...any} inputs - Class names to combine
+ * @returns {string} Combined class names
+ */
+const classNames = (...inputs) => {
+  const classes = [];
+
+  for (const input of inputs) {
+    if (!input) continue;
+
+    const inputType = typeof input;
+
+    if (inputType === 'string' || inputType === 'number') {
+      classes.push(input);
+    } else if (Array.isArray(input)) {
+      if (input.length) {
+        const inner = classNames(...input);
+        if (inner) classes.push(inner);
+      }
+    } else if (inputType === 'object') {
+      for (const key in input) {
+        if (input[key]) {
+          classes.push(key);
+        }
+      }
+    }
+  }
+
+  return classes.join(' ');
+};
 
 /**
- * Combines class names with clsx and merges Tailwind classes
+ * Merges Tailwind CSS classes, removing conflicts
+ * @param {string} classString - Space-separated class names
+ * @returns {string} Merged class names without conflicts
+ */
+const mergeTailwindClasses = (classString) => {
+  if (!classString) return '';
+
+  const classes = classString.split(' ').filter(Boolean);
+  const classMap = new Map();
+
+  // Tailwind class prefixes that conflict with each other
+  const conflictGroups = [
+    // Spacing
+    /^(p|px|py|pt|pb|pl|pr)-/,
+    /^(m|mx|my|mt|mb|ml|mr)-/,
+    /^gap-/,
+    /^space-(x|y)-/,
+    // Sizing
+    /^w-/,
+    /^h-/,
+    /^min-w-/,
+    /^min-h-/,
+    /^max-w-/,
+    /^max-h-/,
+    // Colors
+    /^(bg|text|border|ring|shadow)-/,
+    // Typography
+    /^text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)/,
+    /^font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black)/,
+    /^leading-/,
+    /^tracking-/,
+    // Layout
+    /^(flex|grid|block|inline|hidden)/,
+    /^(static|fixed|absolute|relative|sticky)/,
+    /^(top|bottom|left|right|inset)-/,
+    /^z-/,
+    // Flexbox & Grid
+    /^(justify|items|content|self)-/,
+    /^(flex-row|flex-col|grid-cols|grid-rows)/,
+    /^order-/,
+    // Borders
+    /^rounded/,
+    /^border-(\d|t-|b-|l-|r-|x-|y-)/,
+    // Effects
+    /^opacity-/,
+    /^shadow/,
+    // Transitions
+    /^transition/,
+    /^duration-/,
+    /^ease-/,
+  ];
+
+  for (const className of classes) {
+    let groupKey = className;
+
+    // Find which conflict group this class belongs to
+    for (const pattern of conflictGroups) {
+      if (pattern.test(className)) {
+        groupKey = className.match(pattern)[0];
+        break;
+      }
+    }
+
+    // Store the class, overwriting previous ones in the same group
+    classMap.set(groupKey, className);
+  }
+
+  return Array.from(classMap.values()).join(' ');
+};
+
+/**
+ * Combines class names and merges Tailwind classes
  * @param  {...any} inputs - Class names to combine
  * @returns {string} Merged class names
  */
-export const cn = (...inputs) => twMerge(clsx(inputs));
+export const cn = (...inputs) => mergeTailwindClasses(classNames(...inputs));
 
 /**
  * Format bytes to human-readable string
@@ -46,7 +147,15 @@ export const formatDate = (date) => {
  * @returns {string} Formatted date and time string
  */
 export const formatDateTime = (date) => {
+  if (!date) return 'Unknown date';
+  
   const d = new Date(date);
+  
+  // Check if date is valid
+  if (isNaN(d.getTime())) {
+    return 'Invalid date';
+  }
+  
   return d.toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',

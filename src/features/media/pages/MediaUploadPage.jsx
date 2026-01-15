@@ -9,7 +9,7 @@ import {
   CardTitle,
   CardDescription,
 } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeftIcon, CheckCircledIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 
 export const MediaUploadPage = () => {
@@ -27,7 +27,7 @@ export const MediaUploadPage = () => {
       <div className="flex items-center space-x-4">
         <Link to="/media">
           <Button variant="ghost" size="sm">
-            <ArrowLeft className="h-4 w-4 mr-2" />
+            <ArrowLeftIcon className="h-4 w-4 mr-2" />
             Back to Media
           </Button>
         </Link>
@@ -76,7 +76,7 @@ export const MediaUploadPage = () => {
         <Card className="border-green-200 bg-green-50">
           <CardContent className="pt-6">
             <div className="flex items-center space-x-3">
-              <CheckCircle className="h-6 w-6 text-green-600" />
+              <CheckCircledIcon className="h-6 w-6 text-green-600" />
               <div>
                 <p className="font-medium text-green-900">Upload Complete</p>
                 <p className="text-sm text-green-700">

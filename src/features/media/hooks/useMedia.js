@@ -6,7 +6,7 @@ import {
   deleteMediaFile,
   createMediaItem,
 } from '@/api/media';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 export const useMediaList = (filters) => {
   return useQuery({

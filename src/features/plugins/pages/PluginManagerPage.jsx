@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Plug, Power, PowerOff, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ComponentInstanceIcon, LightningBoltIcon, CircleIcon, UpdateIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { formatDateTime } from '@/lib/utils';
 
 const PluginCard = ({ plugin, onToggle, isToggling }) => {
@@ -22,7 +22,7 @@ const PluginCard = ({ plugin, onToggle, isToggling }) => {
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
-            <Plug className="h-8 w-8 text-blue-500" />
+            <ComponentInstanceIcon className="h-8 w-8 text-blue-500" />
             <div>
               <CardTitle>{plugin.name}</CardTitle>
               <CardDescription>{plugin.version}</CardDescription>
@@ -63,12 +63,12 @@ const PluginCard = ({ plugin, onToggle, isToggling }) => {
           >
             {isEnabled ? (
               <>
-                <PowerOff className="h-4 w-4 mr-2" />
+                <CircleIcon className="h-4 w-4 mr-2" />
                 Disable
               </>
             ) : (
               <>
-                <Power className="h-4 w-4 mr-2" />
+                <LightningBoltIcon className="h-4 w-4 mr-2" />
                 Enable
               </>
             )}
@@ -158,7 +158,7 @@ const HookLogViewer = () => {
                           onClick={() => handleRetry(log.id)}
                           disabled={retryMutation.isPending}
                         >
-                          <RefreshCw className="h-4 w-4" />
+                          <UpdateIcon className="h-4 w-4" />
                         </Button>
                       )}
                     </div>
@@ -199,7 +199,7 @@ const HookLogViewer = () => {
                     onClick={prevPage}
                     disabled={page === 1}
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronLeftIcon className="h-4 w-4" />
                     Previous
                   </Button>
                   <span className="text-sm">
@@ -212,7 +212,7 @@ const HookLogViewer = () => {
                     disabled={page >= totalPages}
                   >
                     Next
-                    <ChevronRight className="h-4 w-4" />
+                    <ChevronRightIcon className="h-4 w-4" />
                   </Button>
                 </div>
               </div>

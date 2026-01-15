@@ -27,6 +27,7 @@ export const FILE_TYPES = {
 export const STATE_COLORS = {
   ingested: 'bg-blue-100 text-blue-800',
   organized: 'bg-green-100 text-green-800',
+  success: 'bg-green-100 text-green-800',
   error: 'bg-red-100 text-red-800',
   disabled: 'bg-gray-100 text-gray-800',
 };

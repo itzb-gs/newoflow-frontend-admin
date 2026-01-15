@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { FolderOpen, Edit, Eye } from 'lucide-react';
+import { FileIcon, Pencil1Icon, EyeOpenIcon } from '@radix-ui/react-icons';
 import { Link } from 'react-router-dom';
 import { formatDate } from '@/lib/utils';
 import { usePermissions } from '@/features/auth/hooks/usePermissions';
@@ -15,7 +15,7 @@ export const CatalogCard = ({ item }) => {
       <CardContent className="pt-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <FolderOpen className="h-10 w-10 text-gray-400" />
+            <FileIcon className="h-10 w-10 text-gray-400" />
             <div>
               <h3 className="font-semibold text-lg">{item.title}</h3>
               <p className="text-sm text-gray-500">{item.type}</p>
@@ -52,14 +52,14 @@ export const CatalogCard = ({ item }) => {
       <CardFooter className="flex justify-end space-x-2">
         <Link to={`/catalog/${item.id}`}>
           <Button variant="outline" size="sm">
-            <Eye className="h-4 w-4 mr-1" />
+            <EyeOpenIcon className="h-4 w-4 mr-1" />
             View
           </Button>
         </Link>
-        {hasPermission(PERMISSIONS.CATALOG_EDIT) && (
+        {hasPermission('CATALOG_EDIT') && (
           <Link to={`/catalog/${item.id}/edit`}>
             <Button variant="outline" size="sm">
-              <Edit className="h-4 w-4 mr-1" />
+              <Pencil1Icon className="h-4 w-4 mr-1" />
               Edit
             </Button>
           </Link>

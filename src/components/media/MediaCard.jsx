@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { FileMusic, FileVideo, Edit, Eye } from 'lucide-react';
+import { FileIcon, VideoIcon, Pencil1Icon, EyeOpenIcon } from '@radix-ui/react-icons';
 import { Link } from 'react-router-dom';
 import { formatBytes, formatDate } from '@/lib/utils';
 import { STATE_COLORS } from '@/lib/constants';
@@ -13,12 +13,12 @@ export const MediaCard = ({ item }) => {
 
   const getFileIcon = () => {
     if (item.fileType?.startsWith('audio')) {
-      return <FileMusic className="h-10 w-10 text-blue-500" />;
+      return <FileIcon className="h-10 w-10 text-blue-500" />;
     }
     if (item.fileType?.startsWith('video')) {
-      return <FileVideo className="h-10 w-10 text-purple-500" />;
+      return <VideoIcon className="h-10 w-10 text-purple-500" />;
     }
-    return <FileMusic className="h-10 w-10 text-gray-400" />;
+    return <FileIcon className="h-10 w-10 text-gray-400" />;
   };
 
   return (
@@ -65,13 +65,13 @@ export const MediaCard = ({ item }) => {
       <CardFooter className="flex justify-end space-x-2">
         <Link to={`/media/${item.id}`}>
           <Button variant="outline" size="sm">
-            <Eye className="h-4 w-4 mr-1" />
+            <EyeOpenIcon className="h-4 w-4 mr-1" />
             View
           </Button>
         </Link>
-        {hasPermission(PERMISSIONS.MEDIA_EDIT) && (
+        {hasPermission('MEDIA_EDIT') && (
           <Button variant="outline" size="sm" disabled>
-            <Edit className="h-4 w-4 mr-1" />
+            <Pencil1Icon className="h-4 w-4 mr-1" />
             Edit
           </Button>
         )}

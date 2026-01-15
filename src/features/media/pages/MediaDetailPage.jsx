@@ -24,7 +24,7 @@ import {
 } from '@/components/ui/dialog';
 import { LifecycleTimeline } from '@/components/media/LifecycleTimeline';
 import { StateBadge } from '@/components/media/StateBadge';
-import { ArrowLeft, Trash2, FileMusic, ExternalLink } from 'lucide-react';
+import { ArrowLeftIcon, TrashIcon, FileIcon, ExternalLinkIcon } from '@radix-ui/react-icons';
 import { formatBytes, formatDateTime } from '@/lib/utils';
 
 export const MediaDetailPage = () => {
@@ -70,12 +70,12 @@ export const MediaDetailPage = () => {
         <div className="flex items-center space-x-4">
           <Link to="/media">
             <Button variant="ghost" size="sm">
-              <ArrowLeft className="h-4 w-4 mr-2" />
+              <ArrowLeftIcon className="h-4 w-4 mr-2" />
               Back
             </Button>
           </Link>
           <div className="flex items-center space-x-3">
-            <FileMusic className="h-8 w-8 text-blue-500" />
+            <FileIcon className="h-8 w-8 text-blue-500" />
             <div>
               <h1 className="text-3xl font-bold">{item.fileName}</h1>
               <p className="text-gray-500 mt-1">{item.filePath}</p>
@@ -84,11 +84,11 @@ export const MediaDetailPage = () => {
         </div>
 
         <div className="flex space-x-2">
-          {hasPermission(PERMISSIONS.MEDIA_DELETE) && (
+          {hasPermission('MEDIA_DELETE') && (
             <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
               <DialogTrigger asChild>
                 <Button variant="destructive">
-                  <Trash2 className="h-4 w-4 mr-2" />
+                  <TrashIcon className="h-4 w-4 mr-2" />
                   Delete
                 </Button>
               </DialogTrigger>
@@ -179,7 +179,7 @@ export const MediaDetailPage = () => {
                     <p className="font-medium">{item.catalogTitle}</p>
                     <p className="text-sm text-gray-500">{item.catalogType}</p>
                   </div>
-                  <ExternalLink className="h-4 w-4 text-gray-400" />
+                  <ExternalLinkIcon className="h-4 w-4 text-gray-400" />
                 </Link>
               </CardContent>
             </Card>

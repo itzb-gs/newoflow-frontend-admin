@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatDateTime } from '@/lib/utils';
 import { StateBadge } from './StateBadge';
-import { CheckCircle, Circle } from 'lucide-react';
+import { CheckCircledIcon, CircleIcon } from '@radix-ui/react-icons';
 
 export const LifecycleTimeline = ({ events }) => {
   if (!events || events.length === 0) {
@@ -28,11 +28,11 @@ export const LifecycleTimeline = ({ events }) => {
             <div key={index} className="flex items-start space-x-3">
               <div className="flex flex-col items-center">
                 {event.state === 'organized' || event.state === 'ingested' ? (
-                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <CheckCircledIcon className="h-5 w-5 text-green-500" />
                 ) : event.state === 'error' ? (
-                  <Circle className="h-5 w-5 text-red-500" />
+                  <CircleIcon className="h-5 w-5 text-red-500" />
                 ) : (
-                  <Circle className="h-5 w-5 text-gray-400" />
+                  <CircleIcon className="h-5 w-5 text-gray-400" />
                 )}
                 {index < events.length - 1 && (
                   <div className="w-0.5 h-12 bg-gray-200 mt-2" />

@@ -11,12 +11,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
-  FolderOpen,
-  FileMusic,
-  Upload,
-  Plug,
-  Activity,
-} from 'lucide-react';
+  FileIcon,
+  MixIcon,
+  UploadIcon,
+  ComponentInstanceIcon,
+  ActivityLogIcon,
+} from '@radix-ui/react-icons';
 import { formatDateTime } from '@/lib/utils';
 import { STATE_COLORS } from '@/lib/constants';
 import { Link } from 'react-router-dom';
@@ -43,20 +43,20 @@ const QuickActions = () => {
     {
       name: 'Upload Media',
       path: '/media/upload',
-      icon: Upload,
-      permission: PERMISSIONS.MEDIA_UPLOAD,
+      icon: UploadIcon,
+      permission: 'MEDIA_UPLOAD',
     },
     {
       name: 'Create Catalog',
       path: '/catalog/new',
-      icon: FolderOpen,
-      permission: PERMISSIONS.CATALOG_CREATE,
+      icon: FileIcon,
+      permission: 'CATALOG_CREATE',
     },
     {
       name: 'Manage Plugins',
       path: '/plugins',
-      icon: Plug,
-      permission: PERMISSIONS.PLUGIN_MANAGE,
+      icon: ComponentInstanceIcon,
+      permission: 'PLUGIN_MANAGE',
     },
   ];
 
@@ -100,20 +100,20 @@ const RecentActivityFeed = () => {
           <div className="space-y-4">
             {activities.map((activity, index) => (
               <div key={index} className="flex items-start space-x-3">
-                <Activity className="h-5 w-5 text-gray-400 mt-0.5" />
+                <ActivityLogIcon className="h-5 w-5 text-gray-400 mt-0.5" />
                 <div className="flex-1">
-                  <p className="text-sm">{activity.description}</p>
+                  <p className="text-sm">{activity.message || activity.description}</p>
                   <div className="flex items-center space-x-2 mt-1">
-                    {activity.state && (
+                    {(activity.status || activity.state) && (
                       <Badge
-                        className={STATE_COLORS[activity.state]}
+                        className={STATE_COLORS[activity.status || activity.state]}
                         variant="secondary"
                       >
-                        {activity.state}
+                        {activity.status || activity.state}
                       </Badge>
                     )}
                     <span className="text-xs text-gray-500">
-                      {formatDateTime(activity.timestamp)}
+                      {formatDateTime(activity.created_at || activity.timestamp)}
                     </span>
                   </div>
                 </div>
@@ -148,25 +148,25 @@ export const DashboardPage = () => {
             <StatCard
               title="Total Media"
               value={stats?.totalMedia || 0}
-              icon={FileMusic}
+              icon={MixIcon}
               description="All media files"
             />
             <StatCard
               title="Catalog Items"
               value={stats?.totalCatalog || 0}
-              icon={FolderOpen}
+              icon={FileIcon}
               description="Organized content"
             />
             <StatCard
               title="Active Plugins"
               value={stats?.activePlugins || 0}
-              icon={Plug}
+              icon={ComponentInstanceIcon}
               description="Running plugins"
             />
             <StatCard
               title="Failed Operations"
               value={stats?.failedOperations || 0}
-              icon={Activity}
+              icon={ActivityLogIcon}
               description="Needs attention"
             />
           </div>

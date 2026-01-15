@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Edit, Trash2, ArrowLeft, FolderOpen } from 'lucide-react';
+import { Pencil1Icon, TrashIcon, ArrowLeftIcon, FileIcon } from '@radix-ui/react-icons';
 import { formatDate } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -64,7 +64,7 @@ export const CatalogDetailPage = () => {
         <div className="flex items-center space-x-4">
           <Link to="/catalog">
             <Button variant="ghost" size="sm">
-              <ArrowLeft className="h-4 w-4 mr-2" />
+              <ArrowLeftIcon className="h-4 w-4 mr-2" />
               Back
             </Button>
           </Link>
@@ -75,19 +75,19 @@ export const CatalogDetailPage = () => {
         </div>
 
         <div className="flex space-x-2">
-          {hasPermission(PERMISSIONS.CATALOG_EDIT) && (
+          {hasPermission('CATALOG_EDIT') && (
             <Link to={`/catalog/${id}/edit`}>
               <Button>
-                <Edit className="h-4 w-4 mr-2" />
+                <Pencil1Icon className="h-4 w-4 mr-2" />
                 Edit
               </Button>
             </Link>
           )}
-          {hasPermission(PERMISSIONS.CATALOG_DELETE) && (
+          {hasPermission('CATALOG_DELETE') && (
             <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
               <DialogTrigger asChild>
                 <Button variant="destructive">
-                  <Trash2 className="h-4 w-4 mr-2" />
+                  <TrashIcon className="h-4 w-4 mr-2" />
                   Delete
                 </Button>
               </DialogTrigger>
@@ -178,7 +178,7 @@ export const CatalogDetailPage = () => {
                       className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg border"
                     >
                       <div className="flex items-center space-x-3">
-                        <FolderOpen className="h-5 w-5 text-gray-400" />
+                        <FileIcon className="h-5 w-5 text-gray-400" />
                         <div>
                           <p className="font-medium text-sm">{media.fileName}</p>
                           <p className="text-xs text-gray-500">{media.filePath}</p>

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, X } from 'lucide-react';
+import { ArrowLeftIcon, Cross2Icon } from '@radix-ui/react-icons';
 import { CONTENT_TYPES } from '@/lib/constants';
 
 export const CatalogFormPage = () => {
@@ -73,8 +73,7 @@ export const CatalogFormPage = () => {
     }
   };
 
-  const handleAddTag = (e) => {
-    e.preventDefault();
+  const handleAddTag = () => {
     if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
       setFormData({
         ...formData,
@@ -106,7 +105,7 @@ export const CatalogFormPage = () => {
       <div className="flex items-center space-x-4">
         <Link to={isEdit ? `/catalog/${id}` : '/catalog'}>
           <Button variant="ghost" size="sm">
-            <ArrowLeft className="h-4 w-4 mr-2" />
+            <ArrowLeftIcon className="h-4 w-4 mr-2" />
             Back
           </Button>
         </Link>
@@ -181,23 +180,27 @@ export const CatalogFormPage = () => {
 
             <div>
               <Label htmlFor="tags">Tags</Label>
-              <form onSubmit={handleAddTag} className="flex space-x-2 mt-2">
+              <div className="flex space-x-2 mt-2">
                 <Input
                   id="tags"
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   placeholder="Add a tag"
                 />
-                <Button type="submit" variant="outline">
+                <Button 
+                  type="button" 
+                  variant="outline"
+                  onClick={handleAddTag}
+                >
                   Add
                 </Button>
-              </form>
+              </div>
               {formData.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-3">
                   {formData.tags.map((tag) => (
                     <Badge key={tag} variant="secondary">
                       {tag}
-                      <X
+                      <Cross2Icon
                         className="h-3 w-3 ml-1 cursor-pointer"
                         onClick={() => handleRemoveTag(tag)}
                       />
