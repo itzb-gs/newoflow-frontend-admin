@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { login as loginApi } from '@/api/auth';
+import { login as loginApi, getCurrentUser } from '@/api/auth';
 import { useAuthStore } from '@/stores/authStore';
 import { toast } from 'sonner';
 
@@ -13,14 +13,31 @@ export const useAuth = () => {
 
   const loginMutation = useMutation({
     mutationFn: loginApi,
-    onSuccess: (data) => {
-      setAuth(data.token, data.user);
-      toast.success('Login successful');
-      navigate('/dashboard');
+    onSuccess: async (data) => {
+      // Login returns { access_token, token_type }
+      // Store token first, then fetch user info
+      try {
+        // Temporarily store token to use in getCurrentUser request
+        const token = data.access_token;
+        
+        // Store token in auth store so it gets used in API requests
+        useAuthStore.setState({ token });
+        
+        // Fetch user information
+        const userData = await getCurrentUser();
+        
+        // Store both token and user data
+        setAuth(token, userData);
+        toast.success('Login successful');
+        navigate('/dashboard');
+      } catch {
+        clearAuth();
+        toast.error('Failed to fetch user information');
+      }
     },
     onError: (error) => {
       toast.error(
-        error.response?.data?.message || 'Login failed. Please try again.'
+        error.response?.data?.detail || 'Login failed. Please try again.'
       );
     },
   });

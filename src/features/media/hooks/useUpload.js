@@ -8,24 +8,20 @@ export const useUpload = () => {
   const [uploadProgress, setUploadProgress] = useState({});
 
   const mutation = useMutation({
-    mutationFn: async ({ file, metadata }) => {
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      if (metadata) {
-        Object.entries(metadata).forEach(([key, value]) => {
-          formData.append(key, value);
-        });
-      }
-
+    mutationFn: async ({ file, title, media_type }) => {
       const fileId = `${file.name}-${Date.now()}`;
       
-      return uploadMediaFile(formData, (progress) => {
-        setUploadProgress((prev) => ({
-          ...prev,
-          [fileId]: progress,
-        }));
-      }).then((result) => {
+      return uploadMediaFile(
+        file,
+        title,
+        media_type,
+        (progress) => {
+          setUploadProgress((prev) => ({
+            ...prev,
+            [fileId]: progress,
+          }));
+        }
+      ).then((result) => {
         setUploadProgress((prev) => {
           const newProgress = { ...prev };
           delete newProgress[fileId];
@@ -39,13 +35,13 @@ export const useUpload = () => {
       toast.success('File uploaded successfully');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || 'Failed to upload file');
+      toast.error(error.response?.data?.detail || 'Failed to upload file');
     },
   });
 
-  const uploadMultiple = async (files, metadata) => {
+  const uploadMultiple = async (files, title, media_type) => {
     const promises = Array.from(files).map((file) =>
-      mutation.mutateAsync({ file, metadata })
+      mutation.mutateAsync({ file, title, media_type })
     );
     
     try {

@@ -4,7 +4,7 @@ import {
   getMediaFile,
   updateMediaFile,
   deleteMediaFile,
-  getMediaLifecycle,
+  createMediaItem,
 } from '@/api/media';
 import { toast } from 'sonner';
 
@@ -23,11 +23,18 @@ export const useMediaItem = (id) => {
   });
 };
 
-export const useMediaLifecycle = (id) => {
-  return useQuery({
-    queryKey: ['media', 'lifecycle', id],
-    queryFn: () => getMediaLifecycle(id),
-    enabled: !!id,
+export const useCreateMedia = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createMediaItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['media'] });
+      toast.success('Media item created successfully');
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.detail || 'Failed to create media item');
+    },
   });
 };
 
@@ -42,7 +49,7 @@ export const useUpdateMedia = () => {
       toast.success('Media file updated successfully');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || 'Failed to update media file');
+      toast.error(error.response?.data?.detail || 'Failed to update media file');
     },
   });
 };
@@ -57,7 +64,7 @@ export const useDeleteMedia = () => {
       toast.success('Media file deleted successfully');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || 'Failed to delete media file');
+      toast.error(error.response?.data?.detail || 'Failed to delete media file');
     },
   });
 };

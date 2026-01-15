@@ -1,48 +1,50 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getPlugins, getPlugin, enablePlugin, disablePlugin } from '@/api/hooks';
+import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
+
+/**
+ * NOTE: Plugin management endpoints are not yet implemented in the backend OpenAPI spec.
+ * These hooks return mock data until backend implementation is available.
+ */
 
 export const usePluginsList = () => {
   return useQuery({
     queryKey: ['plugins', 'list'],
-    queryFn: getPlugins,
+    queryFn: async () => {
+      // TODO: Backend endpoint not available
+      // Return mock data for now
+      toast.info('Plugin API not yet implemented in backend');
+      return [];
+    },
+    staleTime: Infinity, // Don't refetch mock data
   });
 };
 
 export const usePlugin = (id) => {
   return useQuery({
     queryKey: ['plugins', 'item', id],
-    queryFn: () => getPlugin(id),
+    queryFn: async () => {
+      // TODO: Backend endpoint not available
+      return null;
+    },
     enabled: !!id,
+    staleTime: Infinity,
   });
 };
 
 export const useEnablePlugin = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: enablePlugin,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['plugins'] });
-      toast.success('Plugin enabled successfully');
+  return {
+    mutate: () => {
+      toast.warning('Plugin management not yet implemented in backend');
     },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || 'Failed to enable plugin');
-    },
-  });
+    isPending: false,
+  };
 };
 
 export const useDisablePlugin = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: disablePlugin,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['plugins'] });
-      toast.success('Plugin disabled successfully');
+  return {
+    mutate: () => {
+      toast.warning('Plugin management not yet implemented in backend');
     },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || 'Failed to disable plugin');
-    },
-  });
+    isPending: false,
+  };
 };

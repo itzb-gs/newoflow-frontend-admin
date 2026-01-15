@@ -1,6 +1,6 @@
 # API Integration Guide
 
-This document explains how to integrate the NeWoFlow Frontend with the backend API.
+This document explains how to integrate the NeWoFlow Frontend with the backend API based on the OpenAPI 3.1.0 specification.
 
 ## Environment Configuration
 
@@ -15,9 +15,35 @@ VITE_ENABLE_MOCK_API=false
 
 ## Authentication
 
-### Login Endpoint
+### Register User
 
-**POST** `/api/auth/login`
+**POST** `/api/v1/auth/register`
+
+Request:
+```json
+{
+  "username": "string",
+  "email": "string",
+  "password": "string",
+  "role": "admin|editor|viewer|artist" (optional, defaults to "viewer")
+}
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "username": "string",
+  "email": "string",
+  "role": "admin|editor|viewer|artist",
+  "is_active": "string",
+  "created_at": "2024-01-01T00:00:00"
+}
+```
+
+### Login
+
+**POST** `/api/v1/auth/login`
 
 Request:
 ```json
@@ -30,134 +56,213 @@ Request:
 Response:
 ```json
 {
-  "token": "jwt-token-string",
-  "user": {
-    "id": 1,
-    "username": "string",
-    "email": "string",
-    "role": "admin|editor|viewer|artist"
-  }
+  "access_token": "jwt-token-string",
+  "token_type": "bearer"
 }
 ```
 
-The JWT token is stored in localStorage and automatically included in all subsequent requests via the Authorization header.
+After receiving the token, the frontend automatically fetches user information using `/api/v1/auth/me`.
 
-## API Endpoints
+The JWT token is stored in localStorage and automatically included in all subsequent requests via the Authorization header as `Bearer <token>`.
 
-### Dashboard
+### Get Current User
 
-- **GET** `/api/dashboard/stats` - Get dashboard statistics
-- **GET** `/api/dashboard/activity?limit=10` - Get recent activity feed
+**GET** `/api/v1/auth/me`
 
-### Catalog
+Requires: Authorization header with Bearer token
 
-- **GET** `/api/catalog` - List catalog items (supports filtering)
-- **GET** `/api/catalog/:id` - Get single catalog item
-- **POST** `/api/catalog` - Create catalog item
-- **PUT** `/api/catalog/:id` - Update catalog item
-- **DELETE** `/api/catalog/:id` - Delete catalog item
+Response:
+```json
+{
+  "id": 1,
+  "username": "string",
+  "email": "string",
+  "role": "admin|editor|viewer|artist",
+  "is_active": "string",
+  "created_at": "2024-01-01T00:00:00"
+}
+```
 
-Query parameters for listing:
-- `type`: Content type filter
-- `search`: Search query
-- `tags`: Comma-separated tags
-- `page`: Page number
-- `perPage`: Items per page
+### User Management (Admin only)
 
-### Media
+- **GET** `/api/v1/auth/users?skip=0&limit=100` - List users
+- **GET** `/api/v1/auth/users/{user_id}` - Get user by ID
+- **PUT** `/api/v1/auth/users/{user_id}` - Update user
+- **DELETE** `/api/v1/auth/users/{user_id}` - Delete user
 
-- **GET** `/api/media` - List media files (supports filtering)
-- **GET** `/api/media/:id` - Get single media file
-- **POST** `/api/media/upload` - Upload media file (multipart/form-data)
-- **POST** `/api/media/scan` - Trigger directory scan
-- **PUT** `/api/media/:id` - Update media file
-- **DELETE** `/api/media/:id` - Delete media file
-- **GET** `/api/media/:id/lifecycle` - Get lifecycle history
+## Media Catalog
 
-Query parameters for listing:
-- `state`: Lifecycle state filter (ingested, organized, error, disabled)
-- `type`: File type filter (audio, video, image)
-- `page`: Page number
-- `perPage`: Items per page
+### Create Media Item
 
-### Plugins (Admin only)
+**POST** `/api/v1/media/media`
 
-- **GET** `/api/plugins` - List all plugins
-- **GET** `/api/plugins/:id` - Get single plugin
-- **POST** `/api/plugins/:id/enable` - Enable plugin
-- **POST** `/api/plugins/:id/disable` - Disable plugin
+Request:
+```json
+{
+  "title": "string",
+  "media_type": "music|video|series|movie|podcast",
+  "file_path": "string",
+  "description": "string (optional)",
+  "media_metadata": "string (optional, JSON string)"
+}
+```
 
-### Hooks (Admin only)
+### List Media Items
 
-- **GET** `/api/hooks/logs` - Get hook execution logs (supports filtering)
-- **POST** `/api/hooks/logs/:id/retry` - Retry failed hook
+**GET** `/api/v1/media/media`
 
-Query parameters for logs:
-- `plugin`: Filter by plugin name
-- `status`: Filter by status (success, failure)
-- `mediaId`: Filter by media file ID
-- `page`: Page number
-- `perPage`: Items per page
+Query parameters:
+- `skip`: Number of records to skip (default: 0)
+- `limit`: Number of records to return (default: 100)
+- `media_type`: Filter by type (music, video, series, movie, podcast)
+- `state`: Filter by state (ingested, organized, error, disabled)
+
+Response: Array of media items
+
+### Get Media Item
+
+**GET** `/api/v1/media/media/{media_id}`
+
+### Update Media Item
+
+**PUT** `/api/v1/media/media/{media_id}`
+
+Request:
+```json
+{
+  "title": "string (optional)",
+  "media_type": "music|video|series|movie|podcast (optional)",
+  "state": "ingested|organized|error|disabled (optional)",
+  "file_path": "string (optional)",
+  "description": "string (optional)",
+  "media_metadata": "string (optional)"
+}
+```
+
+### Delete Media Item
+
+**DELETE** `/api/v1/media/media/{media_id}`
+
+Returns: 204 No Content
+
+## Media Ingestion
+
+### Upload Media File
+
+**POST** `/api/v1/ingest/ingest/upload`
+
+Content-Type: multipart/form-data
+
+Query parameters:
+- `title`: Optional title
+- `media_type`: Optional media type
+
+Form data:
+- `file`: File to upload (required)
+
+Response: Object with upload result
+
+### Scan Directory
+
+**POST** `/api/v1/ingest/ingest/scan`
+
+Request:
+```json
+{
+  "directory_path": "string",
+  "recursive": true (optional, default: true)
+}
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "source_path": "string",
+  "status": "string",
+  "error_message": "string (optional)",
+  "files_processed": 0,
+  "files_failed": 0,
+  "created_at": "2024-01-01T00:00:00",
+  "completed_at": "2024-01-01T00:00:00 (optional)"
+}
+```
+
+### List Ingestion Jobs
+
+**GET** `/api/v1/ingest/ingest/jobs?skip=0&limit=100`
+
+### Get Ingestion Job
+
+**GET** `/api/v1/ingest/ingest/jobs/{job_id}`
+
+## Hooks & Plugins
+
+### List Hook Logs
+
+**GET** `/api/v1/hooks/hooks/logs`
+
+Query parameters:
+- `skip`: Number of records to skip (default: 0)
+- `limit`: Number of records to return (default: 100)
+- `hook_name`: Filter by hook name
+- `status`: Filter by status
+
+Response: Array of hook logs
+
+### Get Hook Log
+
+**GET** `/api/v1/hooks/hooks/logs/{log_id}`
+
+Response:
+```json
+{
+  "id": 1,
+  "hook_name": "string",
+  "media_item_id": 1 (optional),
+  "status": "string",
+  "message": "string (optional)",
+  "details": "string (optional)",
+  "created_at": "2024-01-01T00:00:00"
+}
+```
 
 ## Response Format
 
-All API responses follow this structure:
-
-### Success Response
-```json
-{
-  "data": { ... },
-  "message": "Success message (optional)"
-}
-```
+All API responses follow the OpenAPI specification.
 
 ### Error Response
 ```json
 {
-  "error": "Error message",
-  "message": "Detailed error description",
-  "statusCode": 400
+  "detail": [
+    {
+      "loc": ["body", "field_name"],
+      "msg": "Error message",
+      "type": "validation_error"
+    }
+  ]
 }
 ```
 
-### Paginated Response
-```json
-{
-  "items": [...],
-  "total": 100,
-  "page": 1,
-  "perPage": 10,
-  "totalPages": 10
-}
-```
+## Missing Endpoints
 
-## Error Handling
+The following features in the frontend do not have corresponding backend endpoints yet:
 
-The Axios client automatically handles:
+1. **Catalog Management** - The frontend uses media items as catalogs. Separate catalog endpoints may need to be implemented.
 
-1. **401 Unauthorized**: Clears auth token and redirects to login
-2. **Network errors**: Shows error toast notification
-3. **Validation errors**: Returns error details for form handling
+2. **Plugin Management** - Endpoints for listing, enabling/disabling plugins are not available.
 
-## File Upload
+3. **Hook Retry** - Endpoint to retry failed hooks is not available.
 
-Media file uploads use multipart/form-data with progress tracking:
+4. **Dashboard Stats** - Aggregated statistics endpoint is not available.
 
-```javascript
-const formData = new FormData();
-formData.append('file', file);
-formData.append('metadata', JSON.stringify({ title, description }));
+5. **Media Lifecycle History** - Timeline of state changes is not available.
 
-await uploadMediaFile(formData, (progress) => {
-  console.log(`Upload progress: ${progress}%`);
-});
-```
-
-Maximum upload size is configured via `VITE_MAX_UPLOAD_SIZE` (default: 500MB).
+These features will display placeholder data or show "not implemented" messages until backend support is added.
 
 ## CORS Configuration
 
-Ensure your backend API allows requests from the frontend origin and includes these headers:
+Ensure your backend API allows requests from the frontend origin:
 
 ```
 Access-Control-Allow-Origin: http://localhost:3000
@@ -184,4 +289,5 @@ server: {
 
 ## Production Deployment
 
-For production, configure your web server (nginx, Apache) to proxy API requests or update `VITE_API_BASE_URL` to point to the production API endpoint.
+For production, update `VITE_API_BASE_URL` to point to your production API endpoint.
+

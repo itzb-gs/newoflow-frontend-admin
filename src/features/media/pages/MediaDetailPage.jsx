@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useMediaItem, useMediaLifecycle, useDeleteMedia } from '../hooks/useMedia';
+import { useMediaItem, useDeleteMedia } from '../hooks/useMedia';
 import { useHookLogs } from '@/features/plugins/hooks/useHookLogs';
 import { usePermissions } from '@/features/auth/hooks/usePermissions';
 import { PERMISSIONS } from '@/lib/permissions';
@@ -32,8 +32,9 @@ export const MediaDetailPage = () => {
   const navigate = useNavigate();
   const { hasPermission } = usePermissions();
   const { data: item, isLoading, error } = useMediaItem(id);
-  const { data: lifecycle } = useMediaLifecycle(id);
-  const { data: hookLogs } = useHookLogs({ mediaId: id, page: 1, perPage: 10 });
+  // Note: Lifecycle history endpoint not available in backend
+  const lifecycle = null;
+  const { data: hookLogs } = useHookLogs({ mediaId: id, skip: 0, limit: 10 });
   const deleteMutation = useDeleteMedia();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 

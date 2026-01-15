@@ -1,5 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getHookLogs, retryHook } from '@/api/hooks';
+import { useQuery } from '@tanstack/react-query';
+import { getHookLogs } from '@/api/hooks';
 import { toast } from 'sonner';
 
 export const useHookLogs = (filters) => {
@@ -10,16 +10,11 @@ export const useHookLogs = (filters) => {
 };
 
 export const useRetryHook = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: retryHook,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['hooks', 'logs'] });
-      toast.success('Hook retry initiated');
+  // Note: Retry endpoint not available in OpenAPI spec
+  return {
+    mutate: () => {
+      toast.warning('Hook retry not yet implemented in backend');
     },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || 'Failed to retry hook');
-    },
-  });
+    isPending: false,
+  };
 };
