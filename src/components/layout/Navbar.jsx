@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useAuthStore } from '@/stores/authStore';
 import { useUIStore } from '@/stores/uiStore';
-import { Menu, LogOut, User } from 'lucide-react';
+import { HamburgerMenuIcon, ExitIcon, PersonIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ROLE_COLORS } from '@/lib/constants';
@@ -17,7 +17,7 @@ export const Navbar = () => {
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-            <Menu className="h-5 w-5" />
+            <HamburgerMenuIcon className="h-5 w-5" />
           </Button>
           <Link to="/dashboard" className="text-xl font-bold text-primary">
             NeWoFlow
@@ -32,12 +32,12 @@ export const Navbar = () => {
           )}
           {user && (
             <div className="flex items-center space-x-2">
-              <User className="h-4 w-4" />
+              <PersonIcon className="h-4 w-4" />
               <span className="text-sm font-medium">{user.username}</span>
             </div>
           )}
           <Button variant="ghost" size="icon" onClick={logout}>
-            <LogOut className="h-5 w-5" />
+            <ExitIcon className="h-5 w-5" />
           </Button>
         </div>
       </div>

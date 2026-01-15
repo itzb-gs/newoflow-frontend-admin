@@ -6,7 +6,7 @@ import {
   updateCatalogItem,
   deleteCatalogItem,
 } from '@/api/catalog';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 export const useCatalogList = (filters = {}) => {
   return useQuery({

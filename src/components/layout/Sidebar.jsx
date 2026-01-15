@@ -3,54 +3,58 @@ import { useUIStore } from '@/stores/uiStore';
 import { usePermissions } from '@/features/auth/hooks/usePermissions';
 import { PERMISSIONS } from '@/lib/permissions';
 import {
-  LayoutDashboard,
-  FolderOpen,
-  FileMusic,
-  Plug,
-  Upload,
-} from 'lucide-react';
+  DashboardIcon,
+  FileIcon,
+  MixIcon,
+  ComponentInstanceIcon,
+  UploadIcon,
+} from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   {
     name: 'Dashboard',
     path: '/dashboard',
-    icon: LayoutDashboard,
+    icon: DashboardIcon,
     permission: null,
   },
   {
     name: 'Catalog',
     path: '/catalog',
-    icon: FolderOpen,
-    permission: PERMISSIONS.CATALOG_VIEW,
+    icon: FileIcon,
+    permission: 'CATALOG_VIEW',
   },
   {
     name: 'Media',
     path: '/media',
-    icon: FileMusic,
-    permission: PERMISSIONS.MEDIA_VIEW,
+    icon: MixIcon,
+    permission: 'MEDIA_VIEW',
   },
   {
     name: 'Upload',
     path: '/media/upload',
-    icon: Upload,
-    permission: PERMISSIONS.MEDIA_UPLOAD,
+    icon: UploadIcon,
+    permission: 'MEDIA_UPLOAD',
   },
   {
     name: 'Plugins',
     path: '/plugins',
-    icon: Plug,
-    permission: PERMISSIONS.PLUGIN_VIEW,
+    icon: ComponentInstanceIcon,
+    permission: 'PLUGIN_VIEW',
   },
 ];
 
 export const Sidebar = () => {
   const { sidebarOpen } = useUIStore();
-  const { hasPermission } = usePermissions();
+  const { hasPermission, role } = usePermissions();
 
-  const filteredNavItems = navItems.filter(
-    (item) => !item.permission || hasPermission(item.permission)
-  );
+  // Show all items if no role is set (dev mode) or if user has permissions
+  const filteredNavItems = navItems.filter((item) => {
+    // No permission requirement means always show
+    if (!item.permission) return true;
+    // Otherwise check permission
+    return hasPermission(item.permission);
+  });
 
   if (!sidebarOpen) return null;
 

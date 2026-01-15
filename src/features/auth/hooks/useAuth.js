@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { login as loginApi, getCurrentUser } from '@/api/auth';
 import { useAuthStore } from '@/stores/authStore';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 /**
  * Hook for authentication operations

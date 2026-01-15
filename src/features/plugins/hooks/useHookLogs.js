@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getHookLogs } from '@/api/hooks';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 export const useHookLogs = (filters) => {
   return useQuery({

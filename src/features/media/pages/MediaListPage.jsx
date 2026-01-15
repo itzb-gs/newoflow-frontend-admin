@@ -8,7 +8,7 @@ import { MediaCard } from '@/components/media/MediaCard';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
-import { Upload, ChevronLeft, ChevronRight } from 'lucide-react';
+import { UploadIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { LIFECYCLE_STATES, FILE_TYPES } from '@/lib/constants';
 
 export const MediaListPage = () => {
@@ -54,10 +54,10 @@ export const MediaListPage = () => {
           <h1 className="text-3xl font-bold">Media Files</h1>
           <p className="text-gray-500 mt-1">Manage your media library</p>
         </div>
-        {hasPermission(PERMISSIONS.MEDIA_UPLOAD) && (
+        {hasPermission('MEDIA_UPLOAD') && (
           <Link to="/media/upload">
             <Button>
-              <Upload className="h-4 w-4 mr-2" />
+              <UploadIcon className="h-4 w-4 mr-2" />
               Upload Media
             </Button>
           </Link>
@@ -122,7 +122,7 @@ export const MediaListPage = () => {
           ) : data?.items?.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-500">No media files found</p>
-              {hasPermission(PERMISSIONS.MEDIA_UPLOAD) && (
+              {hasPermission('MEDIA_UPLOAD') && (
                 <Link to="/media/upload">
                   <Button className="mt-4">Upload your first media file</Button>
                 </Link>
@@ -149,7 +149,7 @@ export const MediaListPage = () => {
                       onClick={prevPage}
                       disabled={page === 1}
                     >
-                      <ChevronLeft className="h-4 w-4" />
+                      <ChevronLeftIcon className="h-4 w-4" />
                       Previous
                     </Button>
                     <span className="text-sm">
@@ -162,7 +162,7 @@ export const MediaListPage = () => {
                       disabled={page >= totalPages}
                     >
                       Next
-                      <ChevronRight className="h-4 w-4" />
+                      <ChevronRightIcon className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>

@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Upload, X, FileIcon } from 'lucide-react';
+import { UploadIcon, Cross2Icon, FileIcon } from '@radix-ui/react-icons';
 import { formatBytes } from '@/lib/utils';
 import { MAX_UPLOAD_SIZE } from '@/lib/constants';
 
@@ -88,7 +88,7 @@ export const MediaUpload = ({ onUpload, isUploading, multiple = true }) => {
           onDragOver={handleDrag}
           onDrop={handleDrop}
         >
-          <Upload className="mx-auto h-12 w-12 text-gray-400" />
+          <UploadIcon className="mx-auto h-12 w-12 text-gray-400" />
           <div className="mt-4">
             <label htmlFor="file-upload" className="cursor-pointer">
               <span className="text-blue-600 hover:text-blue-700 font-medium">
@@ -132,7 +132,7 @@ export const MediaUpload = ({ onUpload, isUploading, multiple = true }) => {
                     onClick={() => handleRemoveFile(index)}
                     disabled={isUploading}
                   >
-                    <X className="h-4 w-4" />
+                    <Cross2Icon className="h-4 w-4" />
                   </Button>
                 </div>
               ))}

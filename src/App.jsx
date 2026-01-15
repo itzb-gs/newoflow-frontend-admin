@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'sonner';
+import { Toaster } from '@/components/ui/toaster';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { Layout } from '@/components/layout/Layout';
 import { LoginPage } from '@/features/auth/pages/LoginPage';
@@ -58,7 +58,7 @@ function App() {
             <Route
               path="catalog"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.CATALOG_VIEW}>
+                <ProtectedRoute requiredPermission="CATALOG_VIEW">
                   <CatalogListPage />
                 </ProtectedRoute>
               }
@@ -66,7 +66,7 @@ function App() {
             <Route
               path="catalog/:id"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.CATALOG_VIEW}>
+                <ProtectedRoute requiredPermission="CATALOG_VIEW">
                   <CatalogDetailPage />
                 </ProtectedRoute>
               }
@@ -74,7 +74,7 @@ function App() {
             <Route
               path="catalog/new"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.CATALOG_CREATE}>
+                <ProtectedRoute requiredPermission="CATALOG_CREATE">
                   <CatalogFormPage />
                 </ProtectedRoute>
               }
@@ -82,7 +82,7 @@ function App() {
             <Route
               path="catalog/:id/edit"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.CATALOG_EDIT}>
+                <ProtectedRoute requiredPermission="CATALOG_EDIT">
                   <CatalogFormPage />
                 </ProtectedRoute>
               }
@@ -92,7 +92,7 @@ function App() {
             <Route
               path="media"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.MEDIA_VIEW}>
+                <ProtectedRoute requiredPermission="MEDIA_VIEW">
                   <MediaListPage />
                 </ProtectedRoute>
               }
@@ -100,7 +100,7 @@ function App() {
             <Route
               path="media/upload"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.MEDIA_UPLOAD}>
+                <ProtectedRoute requiredPermission="MEDIA_UPLOAD">
                   <MediaUploadPage />
                 </ProtectedRoute>
               }
@@ -108,7 +108,7 @@ function App() {
             <Route
               path="media/:id"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.MEDIA_VIEW}>
+                <ProtectedRoute requiredPermission="MEDIA_VIEW">
                   <MediaDetailPage />
                 </ProtectedRoute>
               }
@@ -118,7 +118,7 @@ function App() {
             <Route
               path="plugins"
               element={
-                <ProtectedRoute requiredPermission={PERMISSIONS.PLUGIN_VIEW}>
+                <ProtectedRoute requiredPermission="PLUGIN_VIEW">
                   <PluginManagerPage />
                 </ProtectedRoute>
               }
@@ -128,7 +128,7 @@ function App() {
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
-      <Toaster position="top-right" />
+      <Toaster />
     </QueryClientProvider>
   );
 }

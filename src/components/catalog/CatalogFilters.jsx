@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CONTENT_TYPES } from '@/lib/constants';
-import { X } from 'lucide-react';
+import { Cross2Icon } from '@radix-ui/react-icons';
 
 export const CatalogFilters = ({ filters, onFiltersChange }) => {
   const [tagInput, setTagInput] = useState('');
@@ -95,7 +95,7 @@ export const CatalogFilters = ({ filters, onFiltersChange }) => {
             {filters.tags.map((tag) => (
               <Badge key={tag} variant="secondary">
                 {tag}
-                <X
+                <Cross2Icon
                   className="h-3 w-3 ml-1 cursor-pointer"
                   onClick={() => handleRemoveTag(tag)}
                 />

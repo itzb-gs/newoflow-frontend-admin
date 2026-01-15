@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 /**
  * NOTE: Plugin management endpoints are not yet implemented in the backend OpenAPI spec.
