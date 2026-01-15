@@ -1,7 +1,11 @@
 {
   "name": "newoflow-frontend",
   "version": "0.1.0",
+  "description": "React-based web application for managing multimedia catalogs and media lifecycle",
   "type": "module",
+  "author": "NeWoFlow Team",
+  "license": "UNLICENSED",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
