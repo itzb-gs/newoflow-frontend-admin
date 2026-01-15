@@ -23,6 +23,9 @@ export default [
         navigator: 'readonly',
         console: 'readonly',
         process: 'readonly',
+        localStorage: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
       },
     },
     plugins: {

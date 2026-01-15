@@ -5,9 +5,15 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { Layout } from '@/components/layout/Layout';
 import { LoginPage } from '@/features/auth/pages/LoginPage';
 import { DashboardPage } from '@/features/dashboard/pages/DashboardPage';
+import { CatalogListPage } from '@/features/catalog/pages/CatalogListPage';
+import { CatalogDetailPage } from '@/features/catalog/pages/CatalogDetailPage';
+import { CatalogFormPage } from '@/features/catalog/pages/CatalogFormPage';
+import { MediaListPage } from '@/features/media/pages/MediaListPage';
+import { MediaDetailPage } from '@/features/media/pages/MediaDetailPage';
+import { MediaUploadPage } from '@/features/media/pages/MediaUploadPage';
+import { PluginManagerPage } from '@/features/plugins/pages/PluginManagerPage';
 import { PERMISSIONS } from '@/lib/permissions';
 
-// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -17,21 +23,13 @@ const queryClient = new QueryClient({
   },
 });
 
-// Placeholder pages (to be implemented)
-const CatalogListPage = () => <div>Catalog List Page (Coming Soon)</div>;
-const CatalogDetailPage = () => <div>Catalog Detail Page (Coming Soon)</div>;
-const CatalogFormPage = () => <div>Catalog Form Page (Coming Soon)</div>;
-const MediaListPage = () => <div>Media List Page (Coming Soon)</div>;
-const MediaDetailPage = () => <div>Media Detail Page (Coming Soon)</div>;
-const MediaUploadPage = () => <div>Media Upload Page (Coming Soon)</div>;
-const PluginManagerPage = () => <div>Plugin Manager Page (Coming Soon)</div>;
 const UnauthorizedPage = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div className="text-center">
       <h1 className="text-4xl font-bold text-gray-900 mb-4">403</h1>
       <p className="text-xl text-gray-600">Unauthorized Access</p>
       <p className="text-gray-500 mt-2">
-        You don't have permission to access this page.
+        You don&apos;t have permission to access this page.
       </p>
     </div>
   </div>
