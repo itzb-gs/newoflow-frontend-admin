@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
 import { Plug, Power, PowerOff, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatDateTime } from '@/lib/utils';
 

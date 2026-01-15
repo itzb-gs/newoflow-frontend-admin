@@ -51,7 +51,7 @@ export const useUpload = () => {
     try {
       await Promise.all(promises);
       toast.success(`${files.length} files uploaded successfully`);
-    } catch (error) {
+    } catch {
       toast.error('Some files failed to upload');
     }
   };

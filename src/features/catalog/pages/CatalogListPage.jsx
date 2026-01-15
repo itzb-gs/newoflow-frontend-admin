@@ -12,7 +12,7 @@ import { Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const CatalogListPage = () => {
   const { hasPermission } = usePermissions();
-  const { page, perPage, nextPage, prevPage, setPage } = usePagination(1, 12);
+  const { page, perPage, nextPage, prevPage } = usePagination(1, 12);
   const [filters, setFilters] = useState({ search: '', type: undefined, tags: [] });
   const debouncedSearch = useDebounce(filters.search, 500);
 

@@ -26,6 +26,8 @@ export default [
         localStorage: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
+        alert: 'readonly',
+        FormData: 'readonly',
       },
     },
     plugins: {
