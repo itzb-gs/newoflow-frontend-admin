@@ -11,6 +11,9 @@ import { CatalogFormPage } from '@/features/catalog/pages/CatalogFormPage';
 import { ArtistListPage } from '@/features/artist/pages/ArtistListPage';
 import { ArtistDetailPage } from '@/features/artist/pages/ArtistDetailPage';
 import { ArtistFormPage } from '@/features/artist/pages/ArtistFormPage';
+import { AlbumListPage } from '@/features/album/pages/AlbumListPage';
+import { AlbumDetailPage } from '@/features/album/pages/AlbumDetailPage';
+import { AlbumFormPage } from '@/features/album/pages/AlbumFormPage';
 import { MediaListPage } from '@/features/media/pages/MediaListPage';
 import { MediaDetailPage } from '@/features/media/pages/MediaDetailPage';
 import { MediaUploadPage } from '@/features/media/pages/MediaUploadPage';
@@ -121,6 +124,40 @@ function App() {
               element={
                 <ProtectedRoute requiredPermission="ARTIST_EDIT">
                   <ArtistFormPage />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Album Routes */}
+            <Route
+              path="albums"
+              element={
+                <ProtectedRoute requiredPermission="ALBUM_VIEW">
+                  <AlbumListPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="albums/new"
+              element={
+                <ProtectedRoute requiredPermission="ALBUM_CREATE">
+                  <AlbumFormPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="albums/:id"
+              element={
+                <ProtectedRoute requiredPermission="ALBUM_VIEW">
+                  <AlbumDetailPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="albums/:id/edit"
+              element={
+                <ProtectedRoute requiredPermission="ALBUM_EDIT">
+                  <AlbumFormPage />
                 </ProtectedRoute>
               }
             />

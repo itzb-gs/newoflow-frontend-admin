@@ -9,6 +9,7 @@ import {
   ComponentInstanceIcon,
   UploadIcon,
   PersonIcon,
+  ArchiveIcon,
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 
@@ -30,6 +31,12 @@ const navItems = [
     path: '/artists',
     icon: PersonIcon,
     permission: 'ARTIST_VIEW',
+  },
+  {
+    name: 'Albums',
+    path: '/albums',
+    icon: ArchiveIcon,
+    permission: 'ALBUM_VIEW',
   },
   {
     name: 'Media',
