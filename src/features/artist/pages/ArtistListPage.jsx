@@ -81,7 +81,7 @@ export const ArtistListPage = () => {
               {totalPages > 1 && (
                 <div className="flex items-center justify-between mt-6">
                   <p className="text-sm text-gray-600">
-                    Page {page} of {totalPages}
+                    Showing page {page} of {totalPages}
                   </p>
                   <div className="flex items-center space-x-2">
                     <Button
@@ -93,9 +93,6 @@ export const ArtistListPage = () => {
                       <ChevronLeftIcon className="h-4 w-4" />
                       Previous
                     </Button>
-                    <span className="text-sm">
-                      Page {page} of {totalPages}
-                    </span>
                     <Button
                       variant="outline"
                       size="sm"

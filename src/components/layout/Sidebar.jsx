@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useUIStore } from '@/stores/uiStore';
 import { usePermissions } from '@/features/auth/hooks/usePermissions';
-import { PERMISSIONS } from '@/lib/permissions';
 import {
   DashboardIcon,
   FileIcon,
