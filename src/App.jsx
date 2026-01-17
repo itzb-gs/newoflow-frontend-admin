@@ -8,6 +8,9 @@ import { DashboardPage } from '@/features/dashboard/pages/DashboardPage';
 import { CatalogListPage } from '@/features/catalog/pages/CatalogListPage';
 import { CatalogDetailPage } from '@/features/catalog/pages/CatalogDetailPage';
 import { CatalogFormPage } from '@/features/catalog/pages/CatalogFormPage';
+import { ArtistListPage } from '@/features/artist/pages/ArtistListPage';
+import { ArtistDetailPage } from '@/features/artist/pages/ArtistDetailPage';
+import { ArtistFormPage } from '@/features/artist/pages/ArtistFormPage';
 import { MediaListPage } from '@/features/media/pages/MediaListPage';
 import { MediaDetailPage } from '@/features/media/pages/MediaDetailPage';
 import { MediaUploadPage } from '@/features/media/pages/MediaUploadPage';
@@ -84,6 +87,40 @@ function App() {
               element={
                 <ProtectedRoute requiredPermission="CATALOG_EDIT">
                   <CatalogFormPage />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Artist Routes */}
+            <Route
+              path="artists"
+              element={
+                <ProtectedRoute requiredPermission="ARTIST_VIEW">
+                  <ArtistListPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="artists/new"
+              element={
+                <ProtectedRoute requiredPermission="ARTIST_CREATE">
+                  <ArtistFormPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="artists/:id"
+              element={
+                <ProtectedRoute requiredPermission="ARTIST_VIEW">
+                  <ArtistDetailPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="artists/:id/edit"
+              element={
+                <ProtectedRoute requiredPermission="ARTIST_EDIT">
+                  <ArtistFormPage />
                 </ProtectedRoute>
               }
             />

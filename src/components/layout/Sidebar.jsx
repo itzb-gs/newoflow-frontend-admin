@@ -8,6 +8,7 @@ import {
   MixIcon,
   ComponentInstanceIcon,
   UploadIcon,
+  PersonIcon,
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 
@@ -23,6 +24,12 @@ const navItems = [
     path: '/catalog',
     icon: FileIcon,
     permission: 'CATALOG_VIEW',
+  },
+  {
+    name: 'Artists',
+    path: '/artists',
+    icon: PersonIcon,
+    permission: 'ARTIST_VIEW',
   },
   {
     name: 'Media',
