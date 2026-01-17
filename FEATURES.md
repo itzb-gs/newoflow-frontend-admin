@@ -33,12 +33,94 @@ The NeWoFlow Frontend is a comprehensive React application for multimedia catalo
   - Timestamps
   
 - **Quick Actions**: Role-specific action buttons
-  - Admin: Upload Media, Create Catalog, Manage Plugins
-  - Editor: Upload Media, Create Catalog
-  - Artist: Upload Media
+  - Admin: Upload Media, Create Catalog, Manage Plugins, Add Artist
+  - Editor: Upload Media, Create Catalog, Add Artist, Add Album, Add Track
+  - Artist: Upload Media, Add Track
   - Viewer: Browse Catalog only
 
-## 3. Catalog Management
+## 3. Artist Management
+
+### Artist List View
+- Grid layout with artist cards
+- **Filters:**
+  - Search by artist name
+- Pagination controls
+- Add new artist button (Editor/Admin only)
+
+### Artist Detail View
+- Artist biography and information
+- Profile image display
+- Country and website information
+- Associated albums list with track counts
+- Statistics (total albums and tracks)
+- Edit and Delete actions (permission-based)
+
+### Artist Form (Create/Edit)
+- Name field (required)
+- Country field
+- Biography textarea
+- Image URL input
+- Website URL input
+- Form validation
+- Success/error feedback
+
+## 4. Album Management
+
+### Album List View
+- Grid layout with album cards
+- **Filters:**
+  - Search by album title
+  - Filter by genre
+- Pagination controls
+- Add new album button (Editor/Admin only)
+
+### Album Detail View
+- Album cover image
+- Artist information with link
+- Description and genre
+- Track list with track numbers and durations
+- Release date
+- Statistics (total tracks, total duration)
+- Edit and Delete actions (permission-based)
+
+### Album Form (Create/Edit)
+- Title field (required)
+- Artist selection dropdown (required)
+- Release date picker
+- Genre badges for selection
+- Description textarea
+- Cover image URL input
+- Form validation
+- Success/error feedback
+
+## 5. Track Management
+
+### Track List View
+- Grid layout with track cards
+- **Filters:**
+  - Search by track title
+- Pagination controls
+- Add new track button (Editor/Admin only)
+
+### Track Detail View
+- Track information with album and artist links
+- Track number and duration display
+- Lyrics display (if available)
+- Associated media file link
+- Relationship information
+- Edit and Delete actions (permission-based)
+
+### Track Form (Create/Edit)
+- Title field (required)
+- Artist selection dropdown (required)
+- Album selection dropdown (required)
+- Track number input
+- Duration input (in seconds)
+- Lyrics textarea
+- Form validation
+- Success/error feedback
+
+## 6. Catalog Management
 
 ### Catalog List View
 - Grid layout with catalog cards
@@ -63,7 +145,7 @@ The NeWoFlow Frontend is a comprehensive React application for multimedia catalo
 - Form validation with Zod
 - Success/error feedback
 
-## 4. Media Management
+## 7. Media Management
 
 ### Media List View
 - Grid layout with media cards
@@ -93,7 +175,7 @@ The NeWoFlow Frontend is a comprehensive React application for multimedia catalo
 - File validation (type and size)
 - **Directory Scan Trigger**: Form for scanning server directories
 
-## 5. Plugin Management (Admin Only)
+## 8. Plugin Management (Admin Only)
 
 ### Plugin Manager
 - List of all registered plugins
@@ -115,7 +197,7 @@ The NeWoFlow Frontend is a comprehensive React application for multimedia catalo
 - **Retry Button**: Retry failed hook executions
 - Pagination controls
 
-## 6. Layout & Navigation
+## 9. Layout & Navigation
 
 ### Navbar (Top Bar)
 - NeWoFlow branding/logo
@@ -136,7 +218,7 @@ The NeWoFlow Frontend is a comprehensive React application for multimedia catalo
 - Active page highlighting
 - Icons for each menu item
 
-## 7. UI Components Library
+## 10. UI Components Library
 
 ### Custom Components
 - **Button**: Multiple variants (default, destructive, outline, ghost, link)
@@ -155,7 +237,7 @@ The NeWoFlow Frontend is a comprehensive React application for multimedia catalo
   - Info messages (blue)
   - Auto-dismiss with manual close option
 
-## 8. Role-Based Access Control
+## 11. Role-Based Access Control
 
 ### Four User Roles
 
@@ -189,7 +271,7 @@ The NeWoFlow Frontend is a comprehensive React application for multimedia catalo
 - Component-level guards
 - UI element conditional rendering
 
-## 9. Responsive Design
+## 12. Responsive Design
 
 ### Breakpoints
 - **Mobile**: < 768px (single column, stacked layout)
@@ -202,7 +284,7 @@ The NeWoFlow Frontend is a comprehensive React application for multimedia catalo
 - Grid layouts adapt to screen size
 - Touch-friendly buttons and controls
 
-## 10. Data Management
+## 13. Data Management
 
 ### State Management
 - **TanStack Query**: Server state with caching

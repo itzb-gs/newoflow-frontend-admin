@@ -38,3 +38,22 @@ export const ROLE_COLORS = {
   viewer: 'bg-green-100 text-green-800',
   artist: 'bg-blue-100 text-blue-800',
 };
+
+export const MUSIC_GENRES = [
+  'Rock',
+  'Pop',
+  'Hip Hop',
+  'Jazz',
+  'Classical',
+  'Electronic',
+  'Country',
+  'R&B',
+  'Blues',
+  'Folk',
+  'Metal',
+  'Indie',
+  'Alternative',
+  'Reggae',
+  'Soul',
+  'Other',
+];

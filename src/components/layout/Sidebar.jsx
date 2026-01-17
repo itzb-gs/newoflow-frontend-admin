@@ -1,13 +1,15 @@
 import { NavLink } from 'react-router-dom';
 import { useUIStore } from '@/stores/uiStore';
 import { usePermissions } from '@/features/auth/hooks/usePermissions';
-import { PERMISSIONS } from '@/lib/permissions';
 import {
   DashboardIcon,
   FileIcon,
   MixIcon,
   ComponentInstanceIcon,
   UploadIcon,
+  PersonIcon,
+  ArchiveIcon,
+  MixerHorizontalIcon,
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 
@@ -23,6 +25,24 @@ const navItems = [
     path: '/catalog',
     icon: FileIcon,
     permission: 'CATALOG_VIEW',
+  },
+  {
+    name: 'Artists',
+    path: '/artists',
+    icon: PersonIcon,
+    permission: 'ARTIST_VIEW',
+  },
+  {
+    name: 'Albums',
+    path: '/albums',
+    icon: ArchiveIcon,
+    permission: 'ALBUM_VIEW',
+  },
+  {
+    name: 'Tracks',
+    path: '/tracks',
+    icon: MixerHorizontalIcon,
+    permission: 'TRACK_VIEW',
   },
   {
     name: 'Media',
