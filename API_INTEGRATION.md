@@ -244,19 +244,174 @@ All API responses follow the OpenAPI specification.
 }
 ```
 
+## Catalog Endpoints
+
+The frontend now includes support for managing artists, albums, and tracks in the music catalog. These endpoints follow RESTful conventions and are expected to be implemented at the following paths:
+
+### Artists
+
+**GET** `/api/v1/catalog/artists`
+
+List artists with pagination.
+
+Query parameters:
+- `skip`: Number of records to skip (default: 0)
+- `limit`: Number of records to return (default: 100)
+- `search`: Search by artist name
+
+Response: Array of artist objects
+
+**GET** `/api/v1/catalog/artists/{id}`
+
+Get single artist details.
+
+**POST** `/api/v1/catalog/artists`
+
+Create new artist.
+
+Request:
+```json
+{
+  "name": "string (required)",
+  "bio": "string (optional)",
+  "country": "string (optional)",
+  "image_url": "string (optional)",
+  "website": "string (optional)"
+}
+```
+
+**PUT** `/api/v1/catalog/artists/{id}`
+
+Update artist.
+
+**DELETE** `/api/v1/catalog/artists/{id}`
+
+Delete artist.
+
+**GET** `/api/v1/catalog/artists/{id}/albums`
+
+Get albums for an artist.
+
+### Albums
+
+**GET** `/api/v1/catalog/albums`
+
+List albums with pagination.
+
+Query parameters:
+- `skip`: Number of records to skip (default: 0)
+- `limit`: Number of records to return (default: 100)
+- `search`: Search by album title
+- `artist_id`: Filter by artist ID
+
+Response: Array of album objects
+
+**GET** `/api/v1/catalog/albums/{id}`
+
+Get single album details.
+
+**POST** `/api/v1/catalog/albums`
+
+Create new album.
+
+Request:
+```json
+{
+  "title": "string (required)",
+  "artist_id": "integer (required)",
+  "release_date": "string (optional, ISO format)",
+  "description": "string (optional)",
+  "cover_url": "string (optional)",
+  "genre": "string (optional)"
+}
+```
+
+**PUT** `/api/v1/catalog/albums/{id}`
+
+Update album.
+
+**DELETE** `/api/v1/catalog/albums/{id}`
+
+Delete album.
+
+**GET** `/api/v1/catalog/albums/{id}/tracks`
+
+Get tracks for an album.
+
+### Tracks
+
+**GET** `/api/v1/catalog/tracks`
+
+List tracks with pagination.
+
+Query parameters:
+- `skip`: Number of records to skip (default: 0)
+- `limit`: Number of records to return (default: 100)
+- `search`: Search by track title
+- `album_id`: Filter by album ID
+- `artist_id`: Filter by artist ID
+
+Response: Array of track objects
+
+**GET** `/api/v1/catalog/tracks/{id}`
+
+Get single track details.
+
+**POST** `/api/v1/catalog/tracks`
+
+Create new track.
+
+Request:
+```json
+{
+  "title": "string (required)",
+  "album_id": "integer (required)",
+  "artist_id": "integer (required)",
+  "track_number": "integer (optional)",
+  "duration": "integer (optional, in seconds)",
+  "lyrics": "string (optional)",
+  "media_id": "integer (optional)"
+}
+```
+
+**PUT** `/api/v1/catalog/tracks/{id}`
+
+Update track.
+
+**DELETE** `/api/v1/catalog/tracks/{id}`
+
+Delete track.
+
+**POST** `/api/v1/catalog/tracks/{id}/media`
+
+Link track to media file.
+
+Request:
+```json
+{
+  "media_id": "integer (required)"
+}
+```
+
+**DELETE** `/api/v1/catalog/tracks/{id}/media/{media_id}`
+
+Unlink track from media file.
+
 ## Missing Endpoints
 
 The following features in the frontend do not have corresponding backend endpoints yet:
 
 1. **Catalog Management** - The frontend uses media items as catalogs. Separate catalog endpoints may need to be implemented.
 
-2. **Plugin Management** - Endpoints for listing, enabling/disabling plugins are not available.
+2. **Artist/Album/Track Management** - The frontend has complete UI for managing artists, albums, and tracks at `/api/v1/catalog/*`. These endpoints need to be implemented in the backend following the structure documented above.
 
-3. **Hook Retry** - Endpoint to retry failed hooks is not available.
+3. **Plugin Management** - Endpoints for listing, enabling/disabling plugins are not available.
 
-4. **Dashboard Stats** - Aggregated statistics endpoint is not available.
+4. **Hook Retry** - Endpoint to retry failed hooks is not available.
 
-5. **Media Lifecycle History** - Timeline of state changes is not available.
+5. **Dashboard Stats** - Aggregated statistics endpoint is not available.
+
+6. **Media Lifecycle History** - Timeline of state changes is not available.
 
 These features will display placeholder data or show "not implemented" messages until backend support is added.
 
