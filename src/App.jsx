@@ -14,6 +14,9 @@ import { ArtistFormPage } from '@/features/artist/pages/ArtistFormPage';
 import { AlbumListPage } from '@/features/album/pages/AlbumListPage';
 import { AlbumDetailPage } from '@/features/album/pages/AlbumDetailPage';
 import { AlbumFormPage } from '@/features/album/pages/AlbumFormPage';
+import { TrackListPage } from '@/features/track/pages/TrackListPage';
+import { TrackDetailPage } from '@/features/track/pages/TrackDetailPage';
+import { TrackFormPage } from '@/features/track/pages/TrackFormPage';
 import { MediaListPage } from '@/features/media/pages/MediaListPage';
 import { MediaDetailPage } from '@/features/media/pages/MediaDetailPage';
 import { MediaUploadPage } from '@/features/media/pages/MediaUploadPage';
@@ -158,6 +161,40 @@ function App() {
               element={
                 <ProtectedRoute requiredPermission="ALBUM_EDIT">
                   <AlbumFormPage />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Track Routes */}
+            <Route
+              path="tracks"
+              element={
+                <ProtectedRoute requiredPermission="TRACK_VIEW">
+                  <TrackListPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="tracks/new"
+              element={
+                <ProtectedRoute requiredPermission="TRACK_CREATE">
+                  <TrackFormPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="tracks/:id"
+              element={
+                <ProtectedRoute requiredPermission="TRACK_VIEW">
+                  <TrackDetailPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="tracks/:id/edit"
+              element={
+                <ProtectedRoute requiredPermission="TRACK_EDIT">
+                  <TrackFormPage />
                 </ProtectedRoute>
               }
             />

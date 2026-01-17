@@ -10,6 +10,7 @@ import {
   UploadIcon,
   PersonIcon,
   ArchiveIcon,
+  MixerHorizontalIcon,
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 
@@ -37,6 +38,12 @@ const navItems = [
     path: '/albums',
     icon: ArchiveIcon,
     permission: 'ALBUM_VIEW',
+  },
+  {
+    name: 'Tracks',
+    path: '/tracks',
+    icon: MixerHorizontalIcon,
+    permission: 'TRACK_VIEW',
   },
   {
     name: 'Media',
